@@ -1,0 +1,24 @@
+{
+  "android": {
+    "release": {
+      "keystore": "./keystore.jks",
+      "alias": "JusLaw",
+      "keystoreType": "",
+      "bundleId": "com.saritasa.juslaw.staging"
+    }
+  },
+  "ios": {
+    "debug": {
+      "codeSignIdentity": "iPhone Developer",
+      "provisioningProfile": "",
+      "developmentTeam": "97CJYDC5AL"
+    },
+    "release": {
+      "codeSignIdentity": "iPhone Distribution",
+      "provisioningProfile": "747f184b-ad1b-46f0-a64d-26307097772d",
+      "developmentTeam": "97CJYDC5AL",
+      "packageType": "enterprise",
+      "bundleId": "com.saritasa.juslaw.staging"
+    }
+  }
+}

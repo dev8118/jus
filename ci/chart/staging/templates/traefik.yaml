@@ -1,0 +1,62 @@
+{{- if .Values.deployment.traefik.forceSSL }}
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: {{ include "app.fullname" . }}-redirect
+  namespace: {{ .Values.namespace }}
+spec:
+  redirectScheme:
+    scheme: https
+{{ end }}
+---
+{{- if .Values.deployment.traefik.forceSSL }}
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: {{ include "app.fullname" . }}-headers
+  namespace: {{ .Values.namespace }}
+spec:
+  headers:
+    customRequestHeaders:
+      X-Forwarded-Proto: https
+      X-Forwarded-Port: 443
+{{ end }}
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ include "app.fullname" . }}-http
+  namespace: {{ .Values.namespace }}
+spec:
+  entryPoints:
+    - http
+  routes:
+    - match: Host(`{{ .Values.deployment.traefik.dns }}`)
+      kind: Rule
+      {{- if .Values.deployment.traefik.forceSSL }}
+      middlewares:
+      - name: {{ include "app.fullname" . }}-redirect
+      - name: {{ include "app.fullname" . }}-headers
+      {{end}}
+      priority: 1
+      services:
+        - name: {{ include "app.fullname" . }}
+          port: 80
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ include "app.fullname" . }}-https
+  namespace: {{ .Values.namespace }}
+spec:
+  entryPoints:
+    - https
+  routes:
+    - match: Host(`{{ .Values.deployment.traefik.dns }}`)
+      kind: Rule
+      priority: 1
+      services:
+      - name: {{ include "app.fullname" . }}
+        port: 80
+  tls:
+    secretName: {{ .Values.deployment.traefik.tls }}

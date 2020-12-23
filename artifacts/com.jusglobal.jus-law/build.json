@@ -1,0 +1,16 @@
+{
+	"ios": {
+		"debug": {
+			"codeSignIdentity": "iPhone Developer",
+			"provisioningProfile": "",
+			"developmentTeam": "97CJYDC5AL"
+		},
+		"release": {
+			"codeSignIdentity": "iPhone Distribution",
+			"provisioningProfile": "f723174e-7805-479b-9ffe-60affcbaf409",
+			"developmentTeam": "P9YK5V982S",
+			"packageType": "app-store",
+			"bundleId": "com.jusglobal.jus-law"
+		}
+	}
+}

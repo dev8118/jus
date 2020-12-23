@@ -1,0 +1,10 @@
+{
+	"android": {
+		"release": {
+			"keystore": "./keystore.jks",
+			"alias": "JusLaw",
+			"keystoreType": "",
+			"bundleId": "com.jusglobal.juslaw"
+		}
+	}
+}

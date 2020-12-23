@@ -1,0 +1,97 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "app.fullname" . }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "app.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.deployment.replicaCount | default 1 }}
+  selector:
+    matchLabels:
+      {{- include "app.selectorLabels" . | nindent 6 }}
+  strategy:
+    type: {{ .Values.deployment.deployStrategyType | default "RollingUpdate" }}
+  template:
+    metadata:
+      labels:
+        {{- include "app.selectorLabels" . | nindent 8 }}
+      {{- if hasKey .Values.deployment "forceDeploy" }}
+      {{- if .Values.deployment.forceDeploy }}
+      annotations:
+        rollme: {{ date "2006/01/02-15:04:05" .Release.Time | quote }}
+      {{- end }}
+      {{- end }}
+    spec:
+    {{- with .Values.deployment.image.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      {{- if .Values.serviceAccount }}
+      serviceAccountName: {{ .Values.namespace }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      {{- if hasKey .Values "persistentVolume" }}
+      volumes:
+        - name: {{ .Values.namespace }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.namespace }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.deployment.image.repository }}"
+          imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.deployment.traefik.port | default 80 }}
+              protocol: TCP
+          {{- if hasKey .Values.deployment "healthCheck" }}
+          {{- if hasKey .Values.deployment.healthCheck "livenessProbePath" }}
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.deployment.healthCheck.livenessProbePath }}
+              {{- if .Values.deployment.traefik.forceSSL }}
+              port: https
+              {{ else }}
+              port: http
+              {{ end }}
+          {{ end }}
+          {{- if hasKey .Values.deployment.healthCheck "readinessProbePath" }}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.deployment.healthCheck.readinessProbePath }}
+              {{- if .Values.deployment.traefik.forceSSL }}
+              port: https
+              {{ else }}
+              port: http
+              {{ end }}
+          {{ end }}
+          {{ end }}
+        {{- if hasKey .Values.deployment "env" }}
+          env:
+        {{- with .Values.deployment.env }}
+            {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- end }}
+          resources:
+            {{- toYaml .Values.deployment.resources | nindent 12 }}
+          {{- if hasKey .Values "persistentVolume" }}
+          volumeMounts:
+            - name: {{ .Values.namespace }}
+              mountPath: {{ .Values.persistentVolume.mountPath }}
+          {{- end }}
+      {{- with .Values.deployment.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.deployment.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.deployment.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

@@ -1,0 +1,24 @@
+name: frontend
+namespace: jlp
+serviceAccount: true
+
+deployment:
+  deployStrategyType: RollingUpdate
+  forceDeploy: true
+  image:
+    repository: registry.saritasa.com/jlp/frontend:develop
+    pullPolicy: Always
+    imagePullSecrets:
+      - name: saritasa-gitlab-registry
+  traefik:
+    port: 80
+    tls: saritasa-hosting.com
+    dns: jlp-frontend.saritasa-hosting.com
+    forceSSL: true
+  resources:
+    limits:
+      cpu: 64m
+      memory: 64Mi
+    requests:
+      cpu: 0m
+      memory: 0Mi

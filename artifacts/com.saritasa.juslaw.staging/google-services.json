@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "972650587374",
+    "firebase_url": "https://jlp-staging.firebaseio.com",
+    "project_id": "jlp-staging",
+    "storage_bucket": "jlp-staging.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:972650587374:android:ebe9297ad6327e88907fff",
+        "android_client_info": {
+          "package_name": "com.saritasa.juslaw.staging"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "972650587374-ledfbc1661t7fj9cr1603kqvoffoc17o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYofewCyuo-YhBxvls9uWMWlIjYPNgh-g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "972650587374-ledfbc1661t7fj9cr1603kqvoffoc17o.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "972650587374-bh6e57kpikov3lplt1e8a9qp8s126u8f.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.saritasa.juslaw.staging"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

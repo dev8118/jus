@@ -1,0 +1,15 @@
+{{- if hasKey .Values "persistentVolume" }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ .Values.namespace }}
+  namespace: {{ .Values.namespace }}
+  annotations:
+    volume.beta.kubernetes.io/storage-class: {{ .Values.persistentVolume.storageClass | default "efs" | quote }}
+spec:
+  accessModes:
+    - {{ .Values.persistentVolume.accessModes | default "1024Mi" }}
+  resources:
+    requests:
+      storage: {{ .Values.persistentVolume.storage | default "1024Mi" }}
+{{- end }}

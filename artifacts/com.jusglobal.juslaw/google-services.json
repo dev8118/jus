@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "611393393169",
+    "firebase_url": "https://juslaw-platform-3fe6d.firebaseio.com",
+    "project_id": "juslaw-platform-3fe6d",
+    "storage_bucket": "juslaw-platform-3fe6d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:611393393169:android:bf8e0d0381e5411a3497b0",
+        "android_client_info": {
+          "package_name": "com.jusglobal.juslaw"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "611393393169-8onm9rqkvctk0jms667eitcl8ojiarjh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYXzJKwbb5UOpKBCi10Bw7BbC3dfSVb6o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "611393393169-8onm9rqkvctk0jms667eitcl8ojiarjh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "611393393169-35ua101h59ofqi1g9rogehtsvp4dckd4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.jusglobal.jus-law"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
